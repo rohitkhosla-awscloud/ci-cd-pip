@@ -1,0 +1,22 @@
+
+name: Deploy Python Dashboard to AWS
+
+on:
+  push:
+    branches:
+      - main    # Change to master if your default branch is master
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Deploy Dashboard
+        run: |
+          cd /home/ubuntu/apps/dashboard
+          git pull origin main
+          ./venv/bin/pip install -r requirements.txt
+          sudo systemctl restart dashboard
